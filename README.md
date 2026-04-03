@@ -32,7 +32,7 @@
 
 ### Requirements
 
-* Go 1.22+
+* Go 1.26.1
 * Linux (recommended)
 
 ### Install dependencies
