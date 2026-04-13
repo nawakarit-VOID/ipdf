@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nawakarit
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License v3.0.
 package main
 
 import (
@@ -119,7 +122,7 @@ func StartPipeline(
 				buf.Reset()
 
 				jpeg.Encode(buf, im.img, &jpeg.Options{
-					Quality: 85,
+					Quality: 100,
 				})
 
 				b := im.img.Bounds()

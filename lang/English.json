@@ -3,9 +3,12 @@
   "exit": "Exit",
   "welcome": "Hello %s",
     "bye": "Bye",
-"No images":"No images"
-"Arrange the images in the folder first."
-"Supports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files."
-"PDF size reduced by 30%-50% with 85% quality."
-
+"Select Folder": "Select Folder",
+"Clear": "Clear",
+"Convert": "Convert",
+"No images": "No images",
+"Arrange the images in the folder first.\nSupports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.": "Arrange the images in the folder first.\nSupports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.",
+"Arrange the images in the folder first.": "Arrange the images in the folder first.",
+"Supports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.": "Supports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.",
+"We believe we are the fastest.": "We believe we are the fastest."
 }

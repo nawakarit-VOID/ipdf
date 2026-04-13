@@ -1,0 +1,14 @@
+{
+  "open_file": "เปิดไฟล์",
+  "exit": "ออก",
+  "welcome": "สวัสดี %s",
+  "bye": "ลาก่อน",
+"Select Folder": "เลือกแฟ้ม",
+"Clear": "เคลียร์",
+"Convert": "แปลง",
+"No images": "ไม่มีรูปภาพ",
+"Arrange the images in the folder first.\nSupports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.": "จัดเรียงรูปภาพในโฟลเดอร์ก่อน\nรองรับไฟล์ .jpg, .jpeg, .png, .webp, .bmp และ .tiff",
+"Arrange the images in the folder first.": "จัดเรียงรูปภาพในโฟลเดอร์ก่อน",
+"Supports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.": "รองรับไฟล์ .jpg, .jpeg, .png, .webp, .bmp และ .tiff",
+"We believe we are the fastest.": "เราเชื่อว่าเราเร็วที่สุด (มั้ง)"
+}

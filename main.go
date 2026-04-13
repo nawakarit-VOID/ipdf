@@ -125,30 +125,22 @@ func main() {
 	// ============================================================================
 	i := i18n.New("en")
 	// โหลดภาษา
-	i.Load("English", "lang/English.json")
-	i.Load("ไทย", "lang/ไทย.json")
+	i.Load("EN", "lang/English.json")
+	i.Load("TH", "lang/THAI.json")
 
 	// UI
-	openLabel := i18n.NewLabel(i, "open_file")
-	exitBtn := i18n.NewButton(i, "exit", func() {
-		fmt.Println("bye")
-	})
+
 	// เปลี่ยนภาษา
-	langSelect := widget.NewSelect([]string{"English", "ไทย"}, func(s string) {
+	langSelect := widget.NewSelect([]string{"EN", "TH"}, func(s string) {
 		i.SetLang(s)
 	})
 	// ตั้งค่าเริ่มต้น
-	langSelect.SetSelected("English")
+	langSelect.SetSelected("EN")
 
 	// สร้าง progress bar และ label สำหรับแสดงสถานะการทำงาน
 	progress := widget.NewProgressBar()
 	progress.SetValue(0)
 
-	// สร้าง label สำหรับแสดงสถานะการทำงานของไฟล์ภาพที่ถูกโหลดเข้ามา
-	/*openLabel := i18n.NewLabel(i, "open_file")
-	exitBtn := i18n.NewButton(i, "exit", func() {
-		fmt.Println("bye")
-	})*/
 	status := i18n.NewLabel(i, "No images")
 
 	// ============================================================================
@@ -181,14 +173,14 @@ func main() {
 		},
 	)
 	fileListContainer := container.NewVScroll(fileList)
-	fileListContainer.SetMinSize(fyne.NewSize(100, 250))
+	fileListContainer.SetMinSize(fyne.NewSize(100, 450))
 
 	maxCPU := runtime.NumCPU() //จำนวน CPU สูงสุดของเครื่องที่สามารถใช้ได้ (เช่น 4, 8, 16 cores)
 
 	// ============================================================================
 	// เลือกแฟ้ม
 	// ============================================================================
-	selectBtn := widget.NewButton("☢️ Select Folder", func() {
+	selectBtn := i18n.NewButton(i, "Select Folder", func() {
 
 		fd := dialog.NewFolderOpen(func(uri fyne.ListableURI, err error) {
 
@@ -259,7 +251,7 @@ func main() {
 	selectBtn.Importance = widget.HighImportance //ตั้งค่าความสำคัญของปุ่มเป็น High เพื่อให้มีสีและดูโดดเด่นมากขึ้น
 
 	//ปุ่มเคลียร์รายการภาพที่โหลดเข้ามา
-	clearBtn := widget.NewButton("Clear", func() {
+	clearBtn := i18n.NewButton(i, "Clear", func() {
 
 		files = nil
 		fileStatus = nil
@@ -272,7 +264,7 @@ func main() {
 	clearBtn.Importance = widget.DangerImportance //ตั้งค่าความสำคัญของปุ่มเป็น Danger เพื่อให้มีสีแดงและดูโดดเด่นมากขึ้น
 
 	//ปุ่มเริ่มแปลง
-	convertBtn := widget.NewButton("Convert", func() {
+	convertBtn := i18n.NewButton(i, "Convert", func() {
 
 		if len(files) == 0 {
 			status.SetText("No images")
@@ -307,55 +299,43 @@ func main() {
 	// ============================================================================
 	// จัดวาง UI
 	// ============================================================================
-	TR := container.NewGridWithColumns(1,
+	labelt := i18n.NewLabel(i, "We believe we are the fastest.")
+	labelt.Alignment = fyne.TextAlignCenter
+
+	top := container.NewBorder(
+		nil,    //บน
+		nil,    //ล่าง
+		nil,    // ซ้าย
+		nil,    //ขวา (รวม 10%)
+		labelt, // กลาง (90%)
+	)
+
+	label := i18n.NewLabel(i, "Arrange the images in the folder first.\nSupports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.")
+	label.Alignment = fyne.TextAlignCenter
+
+	input := container.NewGridWithColumns(3, selectBtn, clearBtn, convertBtn)
+
+	TR := container.NewGridWrap(
+		fyne.NewSize(59, 35),
 		langSelect,
 	)
 
-	//Label := container.NewCenter (
-	//	widget.NewLabel("รองรับไฟล์ .jpg, .jpeg, .png, .webp, .bmp, .tiffริ่มแปลงภาพเป็น PDF ขนาดลดลง 30%-50%คุณภาพ 85%"))
-
-	//mK := container.NewCenter(
-	//  widget.NewLabel("เรียงภาพในแฟ้มก่อน (รองรับไฟล์ .jpg, .jpeg, .png, .webp, .bmp, .tiff) เริ่มแปลงภาพเป็น PDF (ขนาดลดลง 30%-50%) (คุณภาพ 85%)"),
-
-	top := container.NewBorder(
-		nil,      //บน
-		nil,      //ล่าง
-		nil,      // ซ้าย
-		TR,       //ขวา (รวม 10%)
-		progress, // กลาง (90%)
-	)
-
-	label := container.NewVBox(
-		widget.NewLabel("Arrange the images in the folder first."),
-		widget.NewLabel("Supports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files."),
-	)
-
-	input := container.NewHBox(
-		selectBtn,
-		clearBtn,
-		convertBtn, openLabel, exitBtn,
-	)
-
-	progressCard := widget.NewCard(
-		"📊 Progress",
-		"",
-		container.NewVBox(
-			status,
-			fileListContainer,
-		),
-	)
+	ProgressTR := container.NewBorder(nil, nil, nil, TR, progress)
 
 	ui := container.NewVBox(
 
 		//container.NewCenter(),
+
 		top,
 		label,
 		input,
-		progressCard,
+		ProgressTR,
+		status,
+		fileListContainer,
 	)
 
 	w.SetContent(container.NewPadded(ui))
-	w.Resize(fyne.NewSize(800, 700))
+	w.Resize(fyne.NewSize(500, 700))
 	w.SetFixedSize(true)
 	w.ShowAndRun()
 }
