@@ -1,7 +1,12 @@
+// Copyright (c) 2026 Nawakarit
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License v3.0.
 package main
 
 import (
 	"bytes"
+	"embed"
+	_ "embed"
 	"fmt"
 	"image"
 	_ "image/gif"
@@ -114,13 +119,35 @@ func updateStatus(index int, text string, list *widget.List) {
 
 }
 
+// โหลด icon
+func loadIcon(size int) fyne.Resource {
+	var file string
+
+	switch {
+	case size >= 512:
+		file = "icons/icon-512.png" ///ที่อยู่
+	case size >= 256:
+		file = "icons/icon-256.png"
+	case size >= 128:
+		file = "icons/icon-128.png"
+	default:
+		file = "icons/icon-64.png"
+	}
+
+	data, _ := iconFS.ReadFile(file)
+	return fyne.NewStaticResource(file, data)
+}
+
+//go:embed icons/*
+var iconFS embed.FS
+
 // ฟังก์ชันสำหรับอัปเดตข้อความแสดงความเร็ว CPU//////////////////////////////////////////////////////////////////////////////////////
 func main() {
 
-	a := app.NewWithID("com.nawakarit.oneimage")
-	a.SetIcon(resourceIconPng) //ต้องปิดตอนเขียนโค้ด แก้โค้ด หรือทดสอบรัน
-	w := a.NewWindow("Image → PDF Ultra Fast")
-	w.SetIcon(resourceIconPng) //ต้องปิดตอนเขียนโค้ด
+	a := app.NewWithID("com.nawakarit.ipdf")
+	icon := loadIcon(64) //เอา data มาใช้
+	w := a.NewWindow("ipdf")
+	w.SetIcon(icon)
 
 	//หน้าหลักของแอปพลิเคชัน โดยใช้ Fyne ในการสร้าง
 	title := canvas.NewText(
