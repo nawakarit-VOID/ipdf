@@ -125,8 +125,8 @@ func main() {
 	// ============================================================================
 	i := i18n.New("en")
 	// โหลดภาษา
-	i.Load("en", "lang/en.json")
-	i.Load("th", "lang/th.json")
+	i.Load("English", "lang/English.json")
+	i.Load("ไทย", "lang/ไทย.json")
 
 	// UI
 	openLabel := i18n.NewLabel(i, "open_file")
@@ -134,11 +134,11 @@ func main() {
 		fmt.Println("bye")
 	})
 	// เปลี่ยนภาษา
-	langSelect := widget.NewSelect([]string{"en", "th"}, func(s string) {
+	langSelect := widget.NewSelect([]string{"English", "ไทย"}, func(s string) {
 		i.SetLang(s)
 	})
 	// ตั้งค่าเริ่มต้น
-	langSelect.SetSelected("en")
+	langSelect.SetSelected("English")
 
 	// สร้าง progress bar และ label สำหรับแสดงสถานะการทำงาน
 	progress := widget.NewProgressBar()
@@ -188,7 +188,7 @@ func main() {
 	// ============================================================================
 	// เลือกแฟ้ม
 	// ============================================================================
-	selectBtn := widget.NewButton("📂 Select Folder", func() {
+	selectBtn := widget.NewButton("☢️ Select Folder", func() {
 
 		fd := dialog.NewFolderOpen(func(uri fyne.ListableURI, err error) {
 
@@ -259,7 +259,7 @@ func main() {
 	selectBtn.Importance = widget.HighImportance //ตั้งค่าความสำคัญของปุ่มเป็น High เพื่อให้มีสีและดูโดดเด่นมากขึ้น
 
 	//ปุ่มเคลียร์รายการภาพที่โหลดเข้ามา
-	clearBtn := widget.NewButton("🗑 Clear Images", func() {
+	clearBtn := widget.NewButton("Clear", func() {
 
 		files = nil
 		fileStatus = nil
@@ -272,7 +272,7 @@ func main() {
 	clearBtn.Importance = widget.DangerImportance //ตั้งค่าความสำคัญของปุ่มเป็น Danger เพื่อให้มีสีแดงและดูโดดเด่นมากขึ้น
 
 	//ปุ่มเริ่มแปลง
-	convertBtn := widget.NewButton("🔀 Convert to PDF", func() {
+	convertBtn := widget.NewButton("Convert", func() {
 
 		if len(files) == 0 {
 			status.SetText("No images")
@@ -301,43 +301,45 @@ func main() {
 		save.Show()
 
 	})
+
 	convertBtn.Importance = widget.SuccessImportance //ตั้งค่าความสำคัญของปุ่มเป็น Success เพื่อให้มีสีเขียวและดูโดดเด่นมากขึ้น
 
-	//จัดวาง UI
-	top := container.NewGridWithColumns(2,
-
-		container.NewCenter(widget.NewLabel("555")),
-
-		container.NewBorder(
-			nil,
-			nil,
-			nil,
-			container.NewGridWrap(fyne.NewSize(60, 30), langSelect),
-		),
+	// ============================================================================
+	// จัดวาง UI
+	// ============================================================================
+	TR := container.NewGridWithColumns(1,
+		langSelect,
 	)
 
-	inputCard := widget.NewCard(
-		"📂 Input Images",
-		"เลือกโฟลเดอร์รูปภาพ (เรียงลำดับภาพในแฟ้มก่อน รับไฟล์ .jpg, .jpeg, .png, .webp, .bmp, .tiff)",
-		container.NewVBox(
-			selectBtn,
-			clearBtn,
-		),
+	//Label := container.NewCenter (
+	//	widget.NewLabel("รองรับไฟล์ .jpg, .jpeg, .png, .webp, .bmp, .tiffริ่มแปลงภาพเป็น PDF ขนาดลดลง 30%-50%คุณภาพ 85%"))
+
+	//mK := container.NewCenter(
+	//  widget.NewLabel("เรียงภาพในแฟ้มก่อน (รองรับไฟล์ .jpg, .jpeg, .png, .webp, .bmp, .tiff) เริ่มแปลงภาพเป็น PDF (ขนาดลดลง 30%-50%) (คุณภาพ 85%)"),
+
+	top := container.NewBorder(
+		nil,      //บน
+		nil,      //ล่าง
+		nil,      // ซ้าย
+		TR,       //ขวา (รวม 10%)
+		progress, // กลาง (90%)
 	)
 
-	convertCard := widget.NewCard(
-		"🔄️ Convert",
-		"เริ่มแปลงภาพเป็น PDF (ขนาดลดลง 30%-50%) (คุณภาพ 85%)",
-		container.NewVBox(
-			convertBtn, openLabel, exitBtn,
-		),
+	label := container.NewVBox(
+		widget.NewLabel("Arrange the images in the folder first."),
+		widget.NewLabel("Supports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files."),
+	)
+
+	input := container.NewHBox(
+		selectBtn,
+		clearBtn,
+		convertBtn, openLabel, exitBtn,
 	)
 
 	progressCard := widget.NewCard(
 		"📊 Progress",
 		"",
 		container.NewVBox(
-			progress,
 			status,
 			fileListContainer,
 		),
@@ -346,16 +348,14 @@ func main() {
 	ui := container.NewVBox(
 
 		//container.NewCenter(),
-
 		top,
-		inputCard,
-		convertCard,
+		label,
+		input,
 		progressCard,
 	)
 
 	w.SetContent(container.NewPadded(ui))
-
 	w.Resize(fyne.NewSize(800, 700))
-
+	w.SetFixedSize(true)
 	w.ShowAndRun()
 }

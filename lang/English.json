@@ -1,0 +1,11 @@
+{
+  "open_file": "Open File",
+  "exit": "Exit",
+  "welcome": "Hello %s",
+    "bye": "Bye",
+"No images":"No images"
+"Arrange the images in the folder first."
+"Supports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files."
+"PDF size reduced by 30%-50% with 85% quality."
+
+}
