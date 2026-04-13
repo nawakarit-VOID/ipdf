@@ -13,6 +13,7 @@ import (
 	"image/jpeg"
 	_ "image/jpeg"
 	_ "image/png"
+	"ipdf/i18n"
 
 	_ "image/gif"
 	_ "image/jpeg"
@@ -148,6 +149,26 @@ func main() {
 	icon := loadIcon(64) //เอา data มาใช้
 	w := a.NewWindow("ipdf")
 	w.SetIcon(icon)
+
+	// ============================================================================
+	// เปลี่ยนภาษา
+	// ============================================================================
+	i := i18n.New("en")
+	// โหลดภาษา
+	i.Load("en", "lang/en.json")
+	i.Load("th", "lang/th.json")
+
+	// UI
+	openLabel := i18n.NewLabel(i, "open_file")
+	exitBtn := i18n.NewButton(i, "exit", func() {
+		fmt.Println("bye")
+	})
+	// เปลี่ยนภาษา
+	langSelect := widget.NewSelect([]string{"en", "th"}, func(s string) {
+		i.SetLang(s)
+	})
+	// ตั้งค่าเริ่มต้น
+	langSelect.SetSelected("en")
 
 	//หน้าหลักของแอปพลิเคชัน โดยใช้ Fyne ในการสร้าง
 	title := canvas.NewText(
@@ -408,6 +429,7 @@ func main() {
 	ui := container.NewVBox(
 
 		container.NewCenter(title),
+		openLabel, exitBtn, langSelect,
 		cpuCard,
 		inputCard,
 		convertCard,

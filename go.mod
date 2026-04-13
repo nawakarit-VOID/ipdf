@@ -1,4 +1,4 @@
-module ipdf18_1
+module ipdf
 
 go 1.26.1
 
