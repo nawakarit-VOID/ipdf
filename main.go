@@ -336,6 +336,6 @@ func main() {
 
 	w.SetContent(container.NewPadded(ui))
 	w.Resize(fyne.NewSize(500, 700))
-	w.SetFixedSize(true)
+	//w.SetFixedSize(true)
 	w.ShowAndRun()
 }
