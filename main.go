@@ -173,7 +173,7 @@ func main() {
 		},
 	)
 	fileListContainer := container.NewVScroll(fileList)
-	fileListContainer.SetMinSize(fyne.NewSize(100, 450))
+	//fileListContainer.SetMinSize(fyne.NewSize(100, 450))
 
 	maxCPU := runtime.NumCPU() //จำนวน CPU สูงสุดของเครื่องที่สามารถใช้ได้ (เช่น 4, 8, 16 cores)
 
@@ -303,36 +303,28 @@ func main() {
 	labelt := i18n.NewLabel(i, "We believe we are the fastest.")
 	labelt.Alignment = fyne.TextAlignCenter
 
-	top := container.NewBorder(
-		nil,    //บน
-		nil,    //ล่าง
-		nil,    // ซ้าย
-		nil,    //ขวา (รวม 10%)
-		labelt, // กลาง (90%)
-	)
-
 	label := i18n.NewLabel(i, "Arrange the images in the folder first.\nSupports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.")
 	label.Alignment = fyne.TextAlignCenter
 
 	input := container.NewGridWithColumns(3, selectBtn, clearBtn, convertBtn)
 
-	TR := container.NewGridWrap(
-		fyne.NewSize(59, 35),
-		langSelect,
-	)
-
+	TR := container.NewGridWrap(fyne.NewSize(59, 35), langSelect)
 	ProgressTR := container.NewBorder(nil, nil, nil, TR, progress)
 
-	ui := container.NewVBox(
+	top := container.NewVBox(
+
+		labelt, label, input, ProgressTR, status,
+	)
+
+	ui := container.NewBorder(
 
 		//container.NewCenter(),
 
-		top,
-		label,
-		input,
-		ProgressTR,
-		status,
-		fileListContainer,
+		top,               //บน
+		nil,               //ล่าง
+		nil,               // ซ้าย
+		nil,               //ขวา
+		fileListContainer, // กลาง
 	)
 
 	w.SetContent(container.NewPadded(ui))
