@@ -9,6 +9,7 @@ import (
 	_ "embed"
 	"fmt"
 	"image"
+	"image/color"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
@@ -35,6 +36,7 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/storage"
@@ -299,6 +301,17 @@ func main() {
 	// ============================================================================
 	// จัดวาง UI
 	// ============================================================================
+	bg1 := canvas.NewImageFromFile("bg1.png")
+	bg2 := canvas.NewRectangle(color.NRGBA{R: 255, G: 255, B: 255, A: 100})
+	btn := widget.NewButton("Click", func() {})
+
+	io := container.NewStack(
+		bg2,                      // ล่างสุด
+		container.NewCenter(btn), // จัดตำแหน่งเพิ่ม
+		//overlay,   // ชั้นกลาง
+		btn, // บนสุด
+	)
+
 	labelt := i18n.NewLabel(i, "We believe we are the fastest.")
 	labelt.Alignment = fyne.TextAlignCenter
 
@@ -325,7 +338,8 @@ func main() {
 	ui := container.NewVBox(
 
 		//container.NewCenter(),
-
+		bg1,
+		io,
 		top,
 		label,
 		input,
