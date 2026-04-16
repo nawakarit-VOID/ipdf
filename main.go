@@ -7,13 +7,13 @@ import (
 	"bytes"
 	"embed"
 	_ "embed"
+	"encoding/json"
 	"fmt"
 	"image"
 	"image/color"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
-	"ipdf/i18n"
 
 	_ "image/gif"
 	_ "image/jpeg"
@@ -161,6 +161,16 @@ var iconFS embed.FS
 //go:embed assets/bg.png
 var bgm []byte
 
+//////////////////////////////////////////////////
+// 🔥 EMBED LANGUAGE FILES
+//////////////////////////////////////////////////
+
+//go:embed assets/lang/English.json
+var enJSON []byte
+
+//go:embed assets/lang/THAI.json
+var thJSON []byte
+
 // ฟังก์ชันสำหรับอัปเดตข้อความแสดงความเร็ว CPU//////////////////////////////////////////////////////////////////////////////////////
 func main() {
 
@@ -182,25 +192,27 @@ func main() {
 	// ============================================================================
 	// เปลี่ยนภาษา
 	// ============================================================================
-	i := i18n.New("en")
-	// โหลดภาษา
-	i.Load("EN", "lang/English.json")
-	i.Load("TH", "lang/THAI.json")
+	var en map[string]string
+	var th map[string]string
+	json.Unmarshal(enJSON, &en)
+	json.Unmarshal(thJSON, &th)
+
+	// create i18n
+	tr := NewI18n(en, th)
+
+	// 🔥 language select // เปลี่ยนภาษา
+	langSelect := NewSelect(tr, []string{"en", "th"}, func(val string) {
+		tr.SetLang(val)
+	})
+	langSelect.SetSelected("en")
 
 	// UI
-
-	// เปลี่ยนภาษา
-	langSelect := widget.NewSelect([]string{"EN", "TH"}, func(s string) {
-		i.SetLang(s)
-	})
-	// ตั้งค่าเริ่มต้น
-	langSelect.SetSelected("EN")
 
 	// สร้าง progress bar และ label สำหรับแสดงสถานะการทำงาน
 	progress := widget.NewProgressBar()
 	progress.SetValue(0)
 
-	status := i18n.NewLabel(i, "No images")
+	status := NewLabel(tr, "No images")
 
 	// ============================================================================
 	// list widget
@@ -244,7 +256,7 @@ func main() {
 	// ============================================================================
 	// เลือกแฟ้ม
 	// ============================================================================
-	selectBtn := i18n.NewButton(i, "Select Folder", func() {
+	selectBtn := NewButton(tr, "Select Folder", func() {
 
 		fd := dialog.NewFolderOpen(func(uri fyne.ListableURI, err error) {
 
@@ -315,7 +327,7 @@ func main() {
 	//selectBtn.Importance = widget.HighImportance //ตั้งค่าความสำคัญของปุ่มเป็น High เพื่อให้มีสีและดูโดดเด่นมากขึ้น
 
 	//ปุ่มเคลียร์รายการภาพที่โหลดเข้ามา
-	clearBtn := i18n.NewButton(i, "Clear", func() {
+	clearBtn := NewButton(tr, "Clear", func() {
 
 		files = nil
 		fileStatus = nil
@@ -328,7 +340,7 @@ func main() {
 	//clearBtn.Importance = widget.DangerImportance //ตั้งค่าความสำคัญของปุ่มเป็น Danger เพื่อให้มีสีแดงและดูโดดเด่นมากขึ้น
 
 	//ปุ่มเริ่มแปลง
-	convertBtn := i18n.NewButton(i, "Convert", func() {
+	convertBtn := NewButton(tr, "Convert", func() {
 
 		if len(files) == 0 {
 			status.SetText("No images")
@@ -364,10 +376,10 @@ func main() {
 	// จัดวาง UI
 	// ============================================================================
 
-	labelt := i18n.NewLabel(i, "We believe we are the fastest.")
+	labelt := NewLabel(tr, "We believe we are the fastest.")
 	labelt.Alignment = fyne.TextAlignCenter
 
-	label := i18n.NewLabel(i, "Arrange the images in the folder first.\nSupports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.")
+	label := NewLabel(tr, "Arrange the images in the folder first.\nSupports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.")
 	label.Alignment = fyne.TextAlignCenter
 
 	selectBtn1 := container.NewGridWrap(fyne.NewSize(150, 35), selectBtn)
@@ -384,6 +396,7 @@ func main() {
 	//layinput := container.NewBorder(nil, nil, nil, nil, input1)
 
 	TR := container.NewGridWrap(fyne.NewSize(59, 35), langSelect)
+	//TR := container.NewGridWrap(fyne.NewSize(300, 35), langSelect)
 	prog := container.NewGridWrap(fyne.NewSize(395, 35), progress)
 
 	ProgressTR := container.NewBorder(
