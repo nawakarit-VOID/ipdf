@@ -148,6 +148,7 @@ func main() {
 	// ============================================================================
 	// สร้าง list widget สำหรับแสดงชื่อไฟล์ภาพและสถานะการทำงานของแต่ละไฟล์ โดยใช้ข้อมูลจาก fileStatus
 	// ซึ่งเป็น slice ของ FileStatus struct ที่เก็บชื่อไฟล์และสถานะการทำงานของแต่ละไฟล์
+
 	fileList := widget.NewList(
 
 		func() int {
@@ -172,8 +173,12 @@ func main() {
 
 		},
 	)
+
 	fileListContainer := container.NewVScroll(fileList)
-	//fileListContainer.SetMinSize(fyne.NewSize(100, 450))
+
+	//scroll := container.NewVScroll(content)
+
+	fileListContainer.SetMinSize(fyne.NewSize(250, 250))
 
 	maxCPU := runtime.NumCPU() //จำนวน CPU สูงสุดของเครื่องที่สามารถใช้ได้ (เช่น 4, 8, 16 cores)
 
@@ -326,10 +331,27 @@ func main() {
 		nil, nil, nil, nil,
 		container.NewCenter(container.NewHBox(prog, TR)))
 
+	/*	row := container.NewHBox(
+		layout.NewSpacer(),
+		fileListContainer,
+		layout.NewSpacer(), // ตัวนี้จะผลัก content ไปทางขวา
+	)*/
+
 	top := container.NewVBox(
 
-		labelt, label, input1, ProgressTR, status,
+		labelt, label, input1, ProgressTR,
+		container.NewCenter(status),
 	)
+
+	// คอลัมน์ซ้าย กว้าง 100, คอลัมน์กลางขยายเต็มที่, คอลัมน์ขวากว้าง 150
+	//left := widget.NewLabel("ซ้าย")
+
+	//center := widget.NewLabel("กลาง (ขยาย)")
+
+	//	right := widget.NewLabel("ขวา")
+	//right.Resize(fyne.NewSize(100, 100))
+
+	//fileListContainer1:= container.NewHBox(fileListContainer)
 
 	ui := container.NewBorder(
 
