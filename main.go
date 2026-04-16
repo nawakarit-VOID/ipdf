@@ -306,14 +306,29 @@ func main() {
 	label := i18n.NewLabel(i, "Arrange the images in the folder first.\nSupports .jpg, .jpeg, .png, .webp, .bmp, and .tiff files.")
 	label.Alignment = fyne.TextAlignCenter
 
-	input := container.NewGridWithColumns(3, selectBtn, clearBtn, convertBtn)
+	selectBtn1 := container.NewGridWrap(fyne.NewSize(150, 35), selectBtn)
+	clearBtn1 := container.NewGridWrap(fyne.NewSize(150, 35), clearBtn)
+	convertBtn1 := container.NewGridWrap(fyne.NewSize(150, 35), convertBtn)
+
+	input1 := container.NewBorder(
+		nil,
+		nil,
+		nil,
+		nil,
+		container.NewCenter(container.NewHBox(selectBtn1, clearBtn1, convertBtn1)))
+
+	//layinput := container.NewBorder(nil, nil, nil, nil, input1)
 
 	TR := container.NewGridWrap(fyne.NewSize(59, 35), langSelect)
-	ProgressTR := container.NewBorder(nil, nil, nil, TR, progress)
+	prog := container.NewGridWrap(fyne.NewSize(395, 35), progress)
+
+	ProgressTR := container.NewBorder(
+		nil, nil, nil, nil,
+		container.NewCenter(container.NewHBox(prog, TR)))
 
 	top := container.NewVBox(
 
-		labelt, label, input, ProgressTR, status,
+		labelt, label, input1, ProgressTR, status,
 	)
 
 	ui := container.NewBorder(
