@@ -158,6 +158,9 @@ func loadIcon(size int) fyne.Resource {
 //go:embed icons/*
 var iconFS embed.FS
 
+//go:embed assets/bg.png
+var bgm []byte
+
 // ฟังก์ชันสำหรับอัปเดตข้อความแสดงความเร็ว CPU//////////////////////////////////////////////////////////////////////////////////////
 func main() {
 
@@ -168,9 +171,13 @@ func main() {
 
 	a.Settings().SetTheme(&MyTheme{})
 
-	bg := canvas.NewImageFromFile("bg.png")
+	//bg1 := iconFS.ReadFile("assets/bg.png")
+	bg1 := canvas.NewImageFromResource(
+		fyne.NewStaticResource("bg.png", bgm),
+	)
+
 	//bg := canvas.NewRectangle(color.NRGBA{255, 255, 255, 80})
-	bg.FillMode = canvas.ImageFillCover // หรือ Contain / Cover /Stretch
+	bg1.FillMode = canvas.ImageFillCover // หรือ Contain / Cover /Stretch
 	// ============================================================================
 	// เปลี่ยนภาษา
 	// ============================================================================
@@ -398,7 +405,7 @@ func main() {
 	overlay := canvas.NewRectangle(color.NRGBA{0, 0, 0, 80})
 
 	ui := container.NewStack(
-		bg, // พื้นหลัง
+		bg1, // พื้นหลัง
 		overlay,
 		content, // UI ด้านบน
 	)

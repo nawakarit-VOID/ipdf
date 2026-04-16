@@ -1,0 +1,71 @@
+{
+  "id" : "com.nawakarit.ipdf",
+  "runtime" : "org.freedesktop.Platform",
+  "runtime-version" : "25.08",
+  "runtime-commit" : "18c4d2cd492ef63f2ba38cd06de0149d2542404144a0e0f6ebe0dfe5f7dbb680",
+  "sdk" : "org.freedesktop.Sdk//25.08",
+  "sdk-commit" : "37c47d7f28c28226e100f12b23e5bfce0a8a0a22f6d6dc720f202ab31bf49e05",
+  "command" : "ipdf",
+  "modules" : [
+    {
+      "name" : "ipdf",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "path" : "../ipdf",
+          "type" : "file"
+        },
+        {
+          "path" : "com.nawakarit.ipdf.desktop",
+          "type" : "file"
+        },
+        {
+          "path" : "com.nawakarit.ipdf.metainfo.xml",
+          "type" : "file"
+        },
+        {
+          "path" : "icons/icon-16.png",
+          "type" : "file"
+        },
+        {
+          "path" : "icons/icon-32.png",
+          "type" : "file"
+        },
+        {
+          "path" : "icons/icon-64.png",
+          "type" : "file"
+        },
+        {
+          "path" : "icons/icon-128.png",
+          "type" : "file"
+        },
+        {
+          "path" : "icons/icon-256.png",
+          "type" : "file"
+        },
+        {
+          "path" : "icons/icon-512.png",
+          "type" : "file"
+        }
+      ],
+      "build-commands" : [
+        "install -D ipdf /app/bin/ipdf",
+        "install -D com.nawakarit.ipdf.desktop /app/share/applications/com.nawakarit.ipdf.desktop",
+        "install -D com.nawakarit.ipdf.metainfo.xml /app/share/metainfo/com.nawakarit.ipdf.metainfo.xml",
+        "install -D icon-16.png /app/share/icons/hicolor/16x16/apps/com.nawakarit.ipdf.png",
+        "install -D icon-32.png /app/share/icons/hicolor/32x32/apps/com.nawakarit.ipdf.png",
+        "install -D icon-64.png /app/share/icons/hicolor/64x64/apps/com.nawakarit.ipdf.png",
+        "install -D icon-128.png /app/share/icons/hicolor/128x128/apps/com.nawakarit.ipdf.png",
+        "install -D icon-256.png /app/share/icons/hicolor/256x256/apps/com.nawakarit.ipdf.png",
+        "install -D icon-512.png /app/share/icons/hicolor/512x512/apps/com.nawakarit.ipdf.png"
+      ]
+    }
+  ],
+  "finish-args" : [
+    "--filesystem=home",
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland"
+  ],
+  "source-date-epoch" : 1776340911
+}

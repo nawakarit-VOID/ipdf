@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=ipdf
+Exec=ipdf
+Icon=com.nawakarit.ipdf
+Type=Application
+Categories=Utility;Graphics;
+Terminal=false
