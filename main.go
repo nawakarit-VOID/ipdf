@@ -9,6 +9,7 @@ import (
 	_ "embed"
 	"fmt"
 	"image"
+	"image/color"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
@@ -35,9 +36,11 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/storage"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -90,6 +93,49 @@ func updateStatus(index int, text string, list *widget.List) {
 
 }
 
+type MyTheme struct{}
+
+func (m MyTheme) Color(name fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
+	switch name {
+	case theme.ColorNameButton:
+		return color.NRGBA{R: 0, G: 0, B: 0, A: 50}
+
+	case theme.ColorNameBackground:
+		return color.NRGBA{R: 245, G: 245, B: 245, A: 255}
+
+	case theme.ColorNameShadow:
+		return color.NRGBA{0, 0, 0, 100}
+		//select
+	case theme.ColorNameInputBackground:
+		return color.NRGBA{0, 0, 0, 50} // พื้นหลัง select
+
+	case theme.ColorNameForeground:
+		return color.White // ตัวอักษร
+
+	case theme.ColorNameHover:
+		return color.NRGBA{0, 0, 0, 80} // hover
+
+	case theme.ColorNameFocus:
+		return color.NRGBA{0, 0, 0, 100} // ตอนคลิก
+		//prog
+	case theme.ColorNamePrimary:
+		return color.NRGBA{0, 0, 0, 50} // สีแท่ง progress
+
+	}
+	return theme.DefaultTheme().Color(name, v)
+}
+
+// ต้องมีครบ
+func (m MyTheme) Font(s fyne.TextStyle) fyne.Resource {
+	return theme.DefaultTheme().Font(s)
+}
+func (m MyTheme) Icon(n fyne.ThemeIconName) fyne.Resource {
+	return theme.DefaultTheme().Icon(n)
+}
+func (m MyTheme) Size(n fyne.ThemeSizeName) float32 {
+	return theme.DefaultTheme().Size(n)
+}
+
 // โหลด icon
 func loadIcon(size int) fyne.Resource {
 	var file string
@@ -120,6 +166,11 @@ func main() {
 	w := a.NewWindow("ipdf")
 	w.SetIcon(icon)
 
+	a.Settings().SetTheme(&MyTheme{})
+
+	bg := canvas.NewImageFromFile("bg.png")
+	//bg := canvas.NewRectangle(color.NRGBA{255, 255, 255, 80})
+	bg.FillMode = canvas.ImageFillCover // หรือ Contain / Cover /Stretch
 	// ============================================================================
 	// เปลี่ยนภาษา
 	// ============================================================================
@@ -253,7 +304,7 @@ func main() {
 		fd.Show()
 
 	})
-	selectBtn.Importance = widget.HighImportance //ตั้งค่าความสำคัญของปุ่มเป็น High เพื่อให้มีสีและดูโดดเด่นมากขึ้น
+	//selectBtn.Importance = widget.HighImportance //ตั้งค่าความสำคัญของปุ่มเป็น High เพื่อให้มีสีและดูโดดเด่นมากขึ้น
 
 	//ปุ่มเคลียร์รายการภาพที่โหลดเข้ามา
 	clearBtn := i18n.NewButton(i, "Clear", func() {
@@ -266,7 +317,7 @@ func main() {
 		status.SetText("No images")
 
 	})
-	clearBtn.Importance = widget.DangerImportance //ตั้งค่าความสำคัญของปุ่มเป็น Danger เพื่อให้มีสีแดงและดูโดดเด่นมากขึ้น
+	//clearBtn.Importance = widget.DangerImportance //ตั้งค่าความสำคัญของปุ่มเป็น Danger เพื่อให้มีสีแดงและดูโดดเด่นมากขึ้น
 
 	//ปุ่มเริ่มแปลง
 	convertBtn := i18n.NewButton(i, "Convert", func() {
@@ -299,7 +350,7 @@ func main() {
 
 	})
 
-	convertBtn.Importance = widget.SuccessImportance //ตั้งค่าความสำคัญของปุ่มเป็น Success เพื่อให้มีสีเขียวและดูโดดเด่นมากขึ้น
+	//convertBtn.Importance = widget.SuccessImportance //ตั้งค่าความสำคัญของปุ่มเป็น Success เพื่อให้มีสีเขียวและดูโดดเด่นมากขึ้น
 
 	// ============================================================================
 	// จัดวาง UI
@@ -331,40 +382,29 @@ func main() {
 		nil, nil, nil, nil,
 		container.NewCenter(container.NewHBox(prog, TR)))
 
-	/*	row := container.NewHBox(
-		layout.NewSpacer(),
-		fileListContainer,
-		layout.NewSpacer(), // ตัวนี้จะผลัก content ไปทางขวา
-	)*/
-
 	top := container.NewVBox(
 
 		labelt, label, input1, ProgressTR,
 		container.NewCenter(status),
 	)
 
-	// คอลัมน์ซ้าย กว้าง 100, คอลัมน์กลางขยายเต็มที่, คอลัมน์ขวากว้าง 150
-	//left := widget.NewLabel("ซ้าย")
-
-	//center := widget.NewLabel("กลาง (ขยาย)")
-
-	//	right := widget.NewLabel("ขวา")
-	//right.Resize(fyne.NewSize(100, 100))
-
-	//fileListContainer1:= container.NewHBox(fileListContainer)
-
-	ui := container.NewBorder(
-
-		//container.NewCenter(),
-
+	content := container.NewBorder(
 		top,               //บน
 		nil,               //ล่าง
 		nil,               // ซ้าย
 		nil,               //ขวา
 		fileListContainer, // กลาง
 	)
+	overlay := canvas.NewRectangle(color.NRGBA{0, 0, 0, 80})
 
-	w.SetContent(container.NewPadded(ui))
+	ui := container.NewStack(
+		bg, // พื้นหลัง
+		overlay,
+		content, // UI ด้านบน
+	)
+
+	//w.SetContent(container.NewPadded(ui))
+	w.SetContent(ui)
 	w.Resize(fyne.NewSize(500, 700))
 	//w.SetFixedSize(true)
 	w.ShowAndRun()

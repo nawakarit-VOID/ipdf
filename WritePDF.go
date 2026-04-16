@@ -105,11 +105,14 @@ func WritePDF(
 			})
 
 		}
-		progress.SetValue(float64(done) / float64(total))
+
+		totalSteps := float64(total) + 1 // +1 สำหรับ savePDF
+
+		progress.SetValue(float64(done) / float64(totalSteps))
 	}
 
 	pdf.OutputFileAndClose(output)
-
+	progress.SetValue(1.0)
 	fyne.Do(func() {
 
 		elapsed := time.Since(start).Seconds()
@@ -120,5 +123,6 @@ func WritePDF(
 			elapsed,
 			float64(total)/elapsed,
 		))
+
 	})
 }
