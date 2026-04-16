@@ -94,8 +94,6 @@ func WritePDF(
 
 			fyne.Do(func() {
 
-				progress.SetValue(float64(done) / float64(total))
-
 				status.SetText(fmt.Sprintf(
 					"🔀 %d / %d images   🎨 %.1f img/s   ⏱ ETA %.1fs",
 					done,
@@ -107,6 +105,7 @@ func WritePDF(
 			})
 
 		}
+		progress.SetValue(float64(done) / float64(total))
 	}
 
 	pdf.OutputFileAndClose(output)
