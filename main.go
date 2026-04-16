@@ -172,6 +172,7 @@ func main() {
 	a.Settings().SetTheme(&MyTheme{})
 
 	//bg1 := iconFS.ReadFile("assets/bg.png")
+
 	bg1 := canvas.NewImageFromResource(
 		fyne.NewStaticResource("bg.png", bgm),
 	)
