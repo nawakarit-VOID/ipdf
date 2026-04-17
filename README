@@ -1,174 +1,34 @@
-Image → PDF Ultra Fast
+ชื่อแอพ - ipdf
+    คุณสมบัติ
+        -ใช้สำหรับแปลงและรวมรูปภาพเป็น pdf 
+        -สามารถใช้ในงานเอกสารได้ แต่ข้อความในไฟล์ไม่สามารถคัดลอกหรือค้นหาได้ (Image-only PDF)
 
-> Convert images to PDF with blazing speed using Go + Fyne GUI
+ขั้นตอนการใช้งาน 
+   แบบง่ายที่สุด
+      - ดาวน์โหลด ipdf.flatpak แล้วนำไปติดตั้ง
 
+วิธีการใช้งาน
+   1.กดติดตั้ง
+         1.เข้าไปที่แฟ้มภาพ แล้วเรียงรูปภาพตามลำดับ ตามที่ต้องการ
+   2.เปิดโปรแกรม ipdf.flatpak
+         1.กดเลือกแฟ้มภาพ (รูปแบบของ browse จะงงๆนิดนึง ให้สังเกต url แทบบน ถ้าขึ้นเป็นแฟ้มที่ต้องการแล้วกด open ได้เลย)
+         2.จะแสดงรายการในแฟ้มนั้นที่เป็นรูปภาพทั้งหมด *แม้ว่านามสกุลต่างกันก็สามารถรวมกันได้
+         3.กด convert
+         4.จะมีหน้าต่างขึ้น ให้ระบุที่บันทึก และชื่อที่จะบันทึก
+         5.กด save 
 
+คุณสมบัติเด่น
+            -เร็วมาก *ขึ้นอยู่กับศักยภาพของเครื่องคอมพิวเตอร์ *ยิ่งมีหน่วยประมวลผลที่เร็วก็ยิ่งทำให้จัดการเร็วยิ่งขึ้น
+            -เราเปลี่ยนมาใช้หน่วยประมวลผลทั้งหมดที่คอมเครื่องนั้นมี
+            -Performance โดยประมาณ | 4 cores | ~3–5 img/s  | - | 8 cores | ~6–10 img/s | ขึ้นอยู่กับขนาดของรูปภาพ
+            -ใช้แรมน้อยมาก *แต่จะใช้ ssd สูง *ยิ่งมี ssd ความเร็วสูง ยิ่งทำให้เร็วยิ่งขึ้น
+            -สามารถแปลงได้ หลายร้อย รูป 
+            -เราเร็วมากกว่าหลายๆโปรแกรม
 
-## 🚀 Features
-
-* ⚡ Ultra-fast multi-core image processing
-* 🧠 Smart pipeline (decode → resize → encode)
-* 🖼️ Supports multiple image formats:
-
-  * JPG / JPEG
-  * PNG
-  * WEBP
-  * BMP
-  * TIFF
-* 📉 Automatic compression (30%–50% smaller)
-* 📊 Real-time progress + ETA
-* 🎛️ Adjustable CPU usage
-* 🖥️ Clean GUI (built with Fyne)
-
----
-
-## 📦 Download
-
-👉 Download the latest version from **Releases**
-
----
-
-## 🛠️ Build from Source
-
-### Requirements
-
-* Go 1.26.1
-* Linux (recommended)
-
-### Install dependencies
-
-```bash
-go mod tidy
-```
-
-### Run
-
-```bash
-go run main.go
-```
-
-### Build
-
-```bash
-go build -o image2pdf
-```
-
----
-
-## 🧠 Supported Formats (Important)
-
-Go requires explicit image decoders.
-
-Make sure these are included:
-
-```go
-import (
-    _ "image/jpeg"
-    _ "image/png"
-    _ "image/gif"
-
-    _ "golang.org/x/image/webp"
-    _ "golang.org/x/image/bmp"
-    _ "golang.org/x/image/tiff"
-)
-```
-
----
-
-## ⚙️ How It Works
-
-Pipeline architecture:
-
-```
-[Files]
-   ↓
-Decode (I/O heavy)
-   ↓
-Resize (CPU)
-   ↓
-Encode (CPU)
-   ↓
-PDF Writer
-```
-
-* Uses goroutines for parallel processing
-* Optimized for multi-core CPUs
-* Buffered channels for smooth flow
-
----
-
-## 🎮 Usage
-
-1. Click **Select Folder**
-2. Choose image directory
-3. Adjust CPU slider (optional)
-4. Click **Convert to PDF**
-5. Choose save location
-
----
-
-## ⚠️ Notes
-
-* GUI apps require system libraries (OpenGL / X11)
-* For best portability, use **AppImage**
-* Large images are automatically resized -##- **and scaled to fit A4 page size** -##-
-
----
-
-## 🧪 Performance
-
-| CPU     | Speed       |
-| ------- | ----------- |
-| 4 cores | ~3–5 img/s  |
-| 8 cores | ~6–10 img/s |
-
-(depending on image size)
-
----
-
-## 📁 Project Structure
-
-```
-.
-├── main.go
-├── go.mod
-├── assets/
-└── README.md
-```
-
----
-
-## 🧑‍💻 Tech Stack
-
-* Go
-* Fyne (GUI)
-* gofpdf
-* nfnt/resize
-
----
-
-## ❤️ Contributing
-
-Pull requests are welcome!
-
----
-
-## 📄 License
-
-MIT License
-
----
-
-## 🙌 Credits
-
-Built with ❤️ using Go
-=======
-
-
-
-
+คุณสมบัติด้อย
+            -โครงสร้างการทำงานภายใน ภาพที่แปลงทุกภาพจะถูกวางในขนาด A4 
+            -ซึ่งภาพขนาดยาวมากๆจะแปลงได้ไม่ดีนัก (มากเลยหละ)
 
 ## License
 This project is licensed under the GNU GPL v3 License.
 คำอธิบายภาษาไทยดูได้ที่ `LICENSE.th.md`
->>>>>>> faaeac0 (กันเสีย)
