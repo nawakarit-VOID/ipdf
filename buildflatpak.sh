@@ -21,9 +21,6 @@ rm -rf build-dir repo
 echo "📦 ก็อป iconsไปที่ Flatpak..."
 cp -r icons  flatpak/
 
-echo "📦 ก็อป assets ไปที่ Flatpak..."
-cp -r assets flatpak/
-
 echo "📦 หาไฟล์ json แล้ว รัน scrip...สร้าง ไฟล์ bundle"
 sleep 1
 flatpak-builder --force-clean --repo=repo build-dir flatpak/com.nawakarit.ipdf.json
