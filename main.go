@@ -142,7 +142,13 @@ func main() {
 	a.Settings().SetTheme(&MyTheme{})
 
 	bg := canvas.NewImageFromResource(resLight)
+	bg.FillMode = canvas.ImageFillCover
 
+	/*
+		Stretch → ยืดเต็ม (อาจเบี้ยว)
+		Contain → ไม่เบี้ยว แต่มีขอบ
+		Cover → เต็มจอ + ไม่เบี้ยว
+	*/
 	// ============================================================================
 	// เปลี่ยนภาษา
 	// ============================================================================
