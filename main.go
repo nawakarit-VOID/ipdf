@@ -93,79 +93,6 @@ func updateStatus(index int, text string, list *widget.List) {
 
 }
 
-type MyTheme struct{}
-
-func (m MyTheme) Color(name fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
-	if v == theme.VariantDark {
-		//theme black
-		switch name {
-		case theme.ColorNameButton: //สีพื้นหลังปุ่ม
-			return color.NRGBA{R: 0, G: 0, B: 0, A: 50}
-
-		case theme.ColorNameBackground: //สีพื้นหลังสุด *ถ้าไม่มีภาพขั้นกลาง
-			return color.NRGBA{R: 0, G: 0, B: 0, A: 255}
-
-		case theme.ColorNameShadow:
-			return color.NRGBA{0, 0, 0, 80}
-			//select
-		case theme.ColorNameInputBackground:
-			return color.NRGBA{50, 50, 50, 50} // พื้นหลัง select
-
-		case theme.ColorNameForeground:
-			return color.NRGBA{50, 50, 50, 50} // ตัวอักษร
-
-		case theme.ColorNameHover:
-			return color.NRGBA{0, 0, 0, 80} // hover
-
-		case theme.ColorNameFocus:
-			return color.NRGBA{0, 0, 0, 100} // ตอนคลิก
-			//prog
-		case theme.ColorNamePrimary:
-			return color.NRGBA{0, 0, 0, 50} // สีแท่ง progress
-
-		}
-	} else {
-		//theme white
-		switch name {
-		case theme.ColorNameButton: //สีพื้นหลังปุ่ม
-			return color.NRGBA{R: 0, G: 0, B: 0, A: 50}
-
-		case theme.ColorNameBackground: //สีพื้นหลังสุด *ถ้าไม่มีภาพขั้นกลาง
-			return color.NRGBA{R: 255, G: 255, B: 255, A: 150}
-
-		case theme.ColorNameShadow: //เงาของทุกสิ่ง
-			return color.NRGBA{250, 0, 0, 255}
-			//select
-		case theme.ColorNameInputBackground:
-			return color.NRGBA{0, 0, 0, 50} // พื้นหลัง select
-
-		case theme.ColorNameForeground:
-			return color.White // ตัวอักษร
-
-		case theme.ColorNameHover:
-			return color.NRGBA{0, 0, 0, 80} // hover
-
-		case theme.ColorNameFocus:
-			return color.NRGBA{0, 0, 0, 100} // ตอนคลิก
-			//prog
-		case theme.ColorNamePrimary:
-			return color.NRGBA{0, 0, 0, 50} // สีแท่ง progress
-		}
-	}
-	return theme.DefaultTheme().Color(name, v)
-}
-
-// ต้องมีครบ
-func (m MyTheme) Font(s fyne.TextStyle) fyne.Resource {
-	return theme.DefaultTheme().Font(s)
-}
-func (m MyTheme) Icon(n fyne.ThemeIconName) fyne.Resource {
-	return theme.DefaultTheme().Icon(n)
-}
-func (m MyTheme) Size(n fyne.ThemeSizeName) float32 {
-	return theme.DefaultTheme().Size(n)
-}
-
 // โหลด icon
 func loadIcon(size int) fyne.Resource {
 	var file string
@@ -188,12 +115,21 @@ func loadIcon(size int) fyne.Resource {
 //go:embed icons/*
 var iconFS embed.FS
 
-//go:embed assets/bg.png
-var bgm []byte
+//go:embed assets/background/bgW.png
+var bgW []byte
 
-//////////////////////////////////////////////////
-// 🔥 EMBED LANGUAGE FILES
-//////////////////////////////////////////////////
+//go:embed assets/background/bgB.png
+var bgB []byte
+
+var resLight = fyne.NewStaticResource("bgW.png", bgW)
+var resDark = fyne.NewStaticResource("bgB.png", bgW)
+
+//go:embed assets/font/Itim-Regular.ttf
+var fontItim []byte
+var myFont = fyne.NewStaticResource("Itim-Regular.ttf", fontItim)
+
+var overlayW = color.NRGBA{250, 0, 0, 80}
+var overlayB = color.NRGBA{0, 0, 0, 80}
 
 //go:embed assets/lang/English.json
 var enJSON []byte
@@ -212,13 +148,25 @@ func main() {
 	a.Settings().SetTheme(&MyTheme{})
 
 	//bg1 := iconFS.ReadFile("assets/bg.png")
+	//bg2 := canvas.NewImageFromResource(resLight)
 
-	bg1 := canvas.NewImageFromResource(
-		fyne.NewStaticResource("bg.png", bgm),
-	)
+	/*bg := canvas.NewImageFromResource(
+		fyne.NewStaticResource("bgW.png", bgW),
+	)*/
+	bg := canvas.NewImageFromResource(resLight)
+
+	updateBG := func() {
+		if fyne.CurrentApp().Settings().ThemeVariant() == theme.VariantDark {
+			bg.Resource = resDark
+		} else {
+			bg.Resource = resLight
+		}
+		bg.Refresh()
+	}
 
 	//bg := canvas.NewRectangle(color.NRGBA{255, 255, 255, 80})
-	bg1.FillMode = canvas.ImageFillCover // หรือ Contain / Cover /Stretch
+	updateBG()
+	bg.FillMode = canvas.ImageFillCover // หรือ Contain / Cover /Stretch
 	// ============================================================================
 	// เปลี่ยนภาษา
 	// ============================================================================
@@ -446,11 +394,11 @@ func main() {
 		nil,               //ขวา
 		fileListContainer, // กลาง
 	)
-	overlay := canvas.NewRectangle(color.NRGBA{0, 0, 0, 80})
+	//overlay := canvas.NewRectangle(color.NRGBA{0, 0, 0, 80})
 
 	ui := container.NewStack(
-		bg1, // พื้นหลัง
-		overlay,
+		bg, // พื้นหลัง
+		//overlay,
 		content, // UI ด้านบน
 	)
 
