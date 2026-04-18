@@ -49,7 +49,7 @@ func (m MyTheme) Color(name fyne.ThemeColorName, v fyne.ThemeVariant) color.Colo
 
 			//🧾 Input / UI
 		case theme.ColorNameInputBackground: // → พื้นหลังช่อง input / select
-			return color.NRGBA{50, 50, 50, 50}
+			return color.NRGBA{200, 200, 200, 50}
 
 		case theme.ColorNamePlaceHolder: // → ตัวอักษร placeholder***
 			return color.NRGBA{255, 0, 0, 255}
@@ -149,6 +149,38 @@ func (m MyTheme) Font(s fyne.TextStyle) fyne.Resource {
 func (m MyTheme) Icon(n fyne.ThemeIconName) fyne.Resource {
 	return theme.DefaultTheme().Icon(n)
 }
-func (m MyTheme) Size(n fyne.ThemeSizeName) float32 {
-	return theme.DefaultTheme().Size(n)
+func (m MyTheme) Size(name fyne.ThemeSizeName) float32 {
+	switch name {
+
+	// 📏 spacing / ระยะ
+	case theme.SizeNamePadding: // → ระยะห่างทั่วไป (margin/padding ของ widget)
+		return 4
+	case theme.SizeNameSeparatorThickness: // → ความหนาเส้นคั่น
+		return 0
+
+	// 🖼️ ไอคอน / scrollbar
+	case theme.SizeNameInlineIcon: // → ขนาด icon ในปุ่ม/ข้อความ /dialog
+		return 14
+
+	case theme.SizeNameScrollBar: // → ความกว้าง scrollbar ปกติ
+		return 12
+	case theme.SizeNameScrollBarSmall: // → scrollbar แบบเล็ก
+		return 3
+
+	// 🔤 ขนาดตัวอักษร
+	case theme.SizeNameText: // → ข้อความปกติ
+		return 14
+	case theme.SizeNameHeadingText: // → หัวข้อใหญ่
+		return 20
+	case theme.SizeNameSubHeadingText: // → หัวข้อรอง
+		return 16
+	case theme.SizeNameCaptionText: // → ตัวเล็ก (caption/คำอธิบาย)
+		return 12
+
+	// 🧾 input
+	case theme.SizeNameInputBorder: // → ความหนาขอบ input
+		return 12
+
+	}
+	return theme.DefaultTheme().Size(name)
 }

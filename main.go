@@ -320,6 +320,10 @@ func main() {
 
 	})
 
+	abbtn := widget.NewButton("!", func() {
+		dialog.ShowInformation("about", "ipdf v1.2.0\nGolang + fyne\n\nโปรแกรมแปลงรูปภาพเป็น pdf (เร็วมาก กินแรมน้อย)\nจริงๆสร้างมาเพื่ออ่านการ์ตูน รองรับ 1 - หลายพันรูป\nคู่มือการใช้ รวมถึงเวอร์ชันใหม่ๆเข้าไปดูได้ในที่ github ด้านล่าง\nคลิกเข้าไปที่แท็บ Repositories แล้วหาชื่อโปรแกรม\n\nBy nawakarit - เจช์ (วัดดงหมี)\nhttps://github.com/nawakarit-VOID\n© 2026", w)
+	})
+
 	// ============================================================================
 	// จัดวาง UI
 	// ============================================================================
@@ -341,13 +345,13 @@ func main() {
 		nil,
 		container.NewCenter(container.NewHBox(selectBtn1, clearBtn1, convertBtn1)))
 
-	TR := container.NewGridWrap(fyne.NewSize(59, 35), langSelect)
-	//TR := container.NewGridWrap(fyne.NewSize(300, 35), langSelect)
 	prog := container.NewGridWrap(fyne.NewSize(395, 35), progress)
+	TR := container.NewGridWrap(fyne.NewSize(49, 35), langSelect)
+	abbtn1 := container.NewGridWrap(fyne.NewSize(10, 35), abbtn)
 
 	ProgressTR := container.NewBorder(
 		nil, nil, nil, nil,
-		container.NewCenter(container.NewHBox(prog, TR)))
+		container.NewCenter(container.NewHBox(prog, TR, abbtn1)))
 
 	top := container.NewVBox(
 
