@@ -40,7 +40,6 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/storage"
-	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -118,11 +117,7 @@ var iconFS embed.FS
 //go:embed assets/background/bgW.png
 var bgW []byte
 
-//go:embed assets/background/bgB.png
-var bgB []byte
-
 var resLight = fyne.NewStaticResource("bgW.png", bgW)
-var resDark = fyne.NewStaticResource("bgB.png", bgW)
 
 //go:embed assets/font/Itim-Regular.ttf
 var fontItim []byte
@@ -144,29 +139,10 @@ func main() {
 	icon := loadIcon(64) //เอา data มาใช้
 	w := a.NewWindow("ipdf")
 	w.SetIcon(icon)
-
 	a.Settings().SetTheme(&MyTheme{})
 
-	//bg1 := iconFS.ReadFile("assets/bg.png")
-	//bg2 := canvas.NewImageFromResource(resLight)
-
-	/*bg := canvas.NewImageFromResource(
-		fyne.NewStaticResource("bgW.png", bgW),
-	)*/
 	bg := canvas.NewImageFromResource(resLight)
 
-	updateBG := func() {
-		if fyne.CurrentApp().Settings().ThemeVariant() == theme.VariantDark {
-			bg.Resource = resDark
-		} else {
-			bg.Resource = resLight
-		}
-		bg.Refresh()
-	}
-
-	//bg := canvas.NewRectangle(color.NRGBA{255, 255, 255, 80})
-	updateBG()
-	bg.FillMode = canvas.ImageFillCover // หรือ Contain / Cover /Stretch
 	// ============================================================================
 	// เปลี่ยนภาษา
 	// ============================================================================
@@ -225,8 +201,6 @@ func main() {
 
 	fileListContainer := container.NewVScroll(fileList)
 
-	//scroll := container.NewVScroll(content)
-
 	fileListContainer.SetMinSize(fyne.NewSize(250, 250))
 
 	maxCPU := runtime.NumCPU() //จำนวน CPU สูงสุดของเครื่องที่สามารถใช้ได้ (เช่น 4, 8, 16 cores)
@@ -246,13 +220,6 @@ func main() {
 			}
 
 			files = nil
-
-			/*list, _ := os.ReadDir(uri.Path())
-
-			if err != nil {
-				dialog.ShowError(err, w)
-				return
-			}*/
 
 			list, err := os.ReadDir(uri.Path())
 			if err != nil {
@@ -348,8 +315,6 @@ func main() {
 
 	})
 
-	//convertBtn.Importance = widget.SuccessImportance //ตั้งค่าความสำคัญของปุ่มเป็น Success เพื่อให้มีสีเขียวและดูโดดเด่นมากขึ้น
-
 	// ============================================================================
 	// จัดวาง UI
 	// ============================================================================
@@ -370,8 +335,6 @@ func main() {
 		nil,
 		nil,
 		container.NewCenter(container.NewHBox(selectBtn1, clearBtn1, convertBtn1)))
-
-	//layinput := container.NewBorder(nil, nil, nil, nil, input1)
 
 	TR := container.NewGridWrap(fyne.NewSize(59, 35), langSelect)
 	//TR := container.NewGridWrap(fyne.NewSize(300, 35), langSelect)
@@ -394,7 +357,6 @@ func main() {
 		nil,               //ขวา
 		fileListContainer, // กลาง
 	)
-	//overlay := canvas.NewRectangle(color.NRGBA{0, 0, 0, 80})
 
 	ui := container.NewStack(
 		bg, // พื้นหลัง

@@ -1,5 +1,5 @@
 {
-  "app-id": "com.nawakarit.ipdf",
+  "id": "com.nawakarit.ipdf",
   "runtime": "org.freedesktop.Platform",
   "runtime-version": "25.08",
   "sdk": "org.freedesktop.Sdk//25.08",
