@@ -18,14 +18,14 @@ func (m MyTheme) Color(name fyne.ThemeColorName, v fyne.ThemeVariant) color.Colo
 		switch name {
 		//🎨 สีหลัก
 		case theme.ColorNameBackground: //→ พื้นหลังหลักของแอพ สีพื้นหลังสุด *ถ้าไม่มีภาพขั้นกลาง
-			return color.NRGBA{R: 255, G: 255, B: 255, A: 255}
+			return color.NRGBA{46, 46, 51, 255}
 
 		case theme.ColorNameForeground: //→ สีตัวอักษร/ไอคอน
-			return color.Black
+			return color.White
 
 			//🔘 ปุ่ม
 		case theme.ColorNameButton: //→ สีปุ่มปกติ
-			return color.NRGBA{R: 50, G: 50, B: 50, A: 50}
+			return color.NRGBA{200, 200, 200, 50}
 
 		case theme.ColorNamePressed: //→ ตอนกด***
 			return color.NRGBA{191, 218, 255, 255}
@@ -59,7 +59,7 @@ func (m MyTheme) Color(name fyne.ThemeColorName, v fyne.ThemeVariant) color.Colo
 			return color.NRGBA{255, 255, 255, 50}
 
 		case theme.ColorNameOverlayBackground: // → dialog / overlay
-			return color.NRGBA{230, 230, 230, 255}
+			return color.NRGBA{46, 46, 51, 255}
 
 		case theme.ColorNameShadow: // → เงา
 			return color.NRGBA{255, 255, 255, 40}
@@ -80,14 +80,14 @@ func (m MyTheme) Color(name fyne.ThemeColorName, v fyne.ThemeVariant) color.Colo
 		switch name {
 		//🎨 สีหลัก
 		case theme.ColorNameBackground: //→ พื้นหลังหลักของแอพ สีพื้นหลังสุด *ถ้าไม่มีภาพขั้นกลาง
-			return color.NRGBA{R: 255, G: 255, B: 255, A: 255}
+			return color.NRGBA{255, 255, 255, 255}
 
 		case theme.ColorNameForeground: //→ สีตัวอักษร/ไอคอน
 			return color.Black
 
 			//🔘 ปุ่ม
 		case theme.ColorNameButton: //→ สีปุ่มปกติ
-			return color.NRGBA{R: 50, G: 50, B: 50, A: 50}
+			return color.NRGBA{50, 50, 50, 50}
 
 		case theme.ColorNamePressed: //→ ตอนกด***
 			return color.NRGBA{191, 218, 255, 255}

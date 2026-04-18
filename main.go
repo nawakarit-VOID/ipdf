@@ -36,7 +36,6 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/storage"
@@ -114,10 +113,10 @@ func loadIcon(size int) fyne.Resource {
 //go:embed icons/*
 var iconFS embed.FS
 
-//go:embed assets/background/bgW.png
-var bgW []byte
+//   //go:embed assets/background/bgW.png
+//var bgW []byte
 
-var resLight = fyne.NewStaticResource("bgW.png", bgW)
+//var resLight = fyne.NewStaticResource("bgW.png", bgW)
 
 //go:embed assets/font/Itim-Regular.ttf
 var fontItim []byte
@@ -141,8 +140,8 @@ func main() {
 	w.SetIcon(icon)
 	a.Settings().SetTheme(&MyTheme{})
 
-	bg := canvas.NewImageFromResource(resLight)
-	bg.FillMode = canvas.ImageFillCover
+	//bg := canvas.NewImageFromResource(resLight)
+	//bg.FillMode = canvas.ImageFillCover
 
 	/*
 		Stretch → ยืดเต็ม (อาจเบี้ยว)
@@ -365,7 +364,7 @@ func main() {
 	)
 
 	ui := container.NewStack(
-		bg, // พื้นหลัง
+		//bg, // พื้นหลัง
 		//overlay,
 		content, // UI ด้านบน
 	)
