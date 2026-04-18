@@ -96,31 +96,61 @@ func updateStatus(index int, text string, list *widget.List) {
 type MyTheme struct{}
 
 func (m MyTheme) Color(name fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
-	switch name {
-	case theme.ColorNameButton:
-		return color.NRGBA{R: 0, G: 0, B: 0, A: 50}
+	if v == theme.VariantDark {
+		//theme black
+		switch name {
+		case theme.ColorNameButton: //สีพื้นหลังปุ่ม
+			return color.NRGBA{R: 0, G: 0, B: 0, A: 50}
 
-	case theme.ColorNameBackground:
-		return color.NRGBA{R: 245, G: 245, B: 245, A: 255}
+		case theme.ColorNameBackground: //สีพื้นหลังสุด *ถ้าไม่มีภาพขั้นกลาง
+			return color.NRGBA{R: 0, G: 0, B: 0, A: 255}
 
-	case theme.ColorNameShadow:
-		return color.NRGBA{0, 0, 0, 100}
-		//select
-	case theme.ColorNameInputBackground:
-		return color.NRGBA{0, 0, 0, 50} // พื้นหลัง select
+		case theme.ColorNameShadow:
+			return color.NRGBA{0, 0, 0, 80}
+			//select
+		case theme.ColorNameInputBackground:
+			return color.NRGBA{50, 50, 50, 50} // พื้นหลัง select
 
-	case theme.ColorNameForeground:
-		return color.White // ตัวอักษร
+		case theme.ColorNameForeground:
+			return color.NRGBA{50, 50, 50, 50} // ตัวอักษร
 
-	case theme.ColorNameHover:
-		return color.NRGBA{0, 0, 0, 80} // hover
+		case theme.ColorNameHover:
+			return color.NRGBA{0, 0, 0, 80} // hover
 
-	case theme.ColorNameFocus:
-		return color.NRGBA{0, 0, 0, 100} // ตอนคลิก
-		//prog
-	case theme.ColorNamePrimary:
-		return color.NRGBA{0, 0, 0, 50} // สีแท่ง progress
+		case theme.ColorNameFocus:
+			return color.NRGBA{0, 0, 0, 100} // ตอนคลิก
+			//prog
+		case theme.ColorNamePrimary:
+			return color.NRGBA{0, 0, 0, 50} // สีแท่ง progress
 
+		}
+	} else {
+		//theme white
+		switch name {
+		case theme.ColorNameButton: //สีพื้นหลังปุ่ม
+			return color.NRGBA{R: 0, G: 0, B: 0, A: 50}
+
+		case theme.ColorNameBackground: //สีพื้นหลังสุด *ถ้าไม่มีภาพขั้นกลาง
+			return color.NRGBA{R: 255, G: 255, B: 255, A: 150}
+
+		case theme.ColorNameShadow: //เงาของทุกสิ่ง
+			return color.NRGBA{250, 0, 0, 255}
+			//select
+		case theme.ColorNameInputBackground:
+			return color.NRGBA{0, 0, 0, 50} // พื้นหลัง select
+
+		case theme.ColorNameForeground:
+			return color.White // ตัวอักษร
+
+		case theme.ColorNameHover:
+			return color.NRGBA{0, 0, 0, 80} // hover
+
+		case theme.ColorNameFocus:
+			return color.NRGBA{0, 0, 0, 100} // ตอนคลิก
+			//prog
+		case theme.ColorNamePrimary:
+			return color.NRGBA{0, 0, 0, 50} // สีแท่ง progress
+		}
 	}
 	return theme.DefaultTheme().Color(name, v)
 }
