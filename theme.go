@@ -16,56 +16,126 @@ func (m MyTheme) Color(name fyne.ThemeColorName, v fyne.ThemeVariant) color.Colo
 	if v == theme.VariantDark {
 		//theme black
 		switch name {
-		case theme.ColorNameButton: //สีปุ่มปกติ
-			return color.NRGBA{R: 50, G: 50, B: 50, A: 50}
-
-		case theme.ColorNameHover: //ตอนเอาเมาส์ชี้
-			return color.NRGBA{255, 255, 255, 40}
-
-		case theme.ColorNameFocus: //สีเด่น (progress bar / highlight / ปุ่มสำคัญ)
-			return color.NRGBA{50, 50, 50, 40}
-
-		case theme.ColorNameBackground: //สีพื้นหลังสุด *ถ้าไม่มีภาพขั้นกลาง
+		//🎨 สีหลัก
+		case theme.ColorNameBackground: //→ พื้นหลังหลักของแอพ สีพื้นหลังสุด *ถ้าไม่มีภาพขั้นกลาง
 			return color.NRGBA{R: 255, G: 255, B: 255, A: 255}
 
-		case theme.ColorNameShadow: //เงาของทุกสิ่ง
-			return color.NRGBA{255, 255, 255, 40}
-			//select
-		case theme.ColorNameInputBackground: //พื้นหลังช่อง input / select
-			return color.NRGBA{50, 50, 50, 50}
-
-		case theme.ColorNameForeground: // สีตัวอักษร/ไอคอน
+		case theme.ColorNameForeground: //→ สีตัวอักษร/ไอคอน
 			return color.Black
 
-		case theme.ColorNamePrimary: // สีแท่ง progress
-			return color.NRGBA{50, 150, 150, 255}
+			//🔘 ปุ่ม
+		case theme.ColorNameButton: //→ สีปุ่มปกติ
+			return color.NRGBA{R: 50, G: 50, B: 50, A: 50}
+
+		case theme.ColorNamePressed: //→ ตอนกด***
+			return color.NRGBA{191, 218, 255, 255}
+
+		case theme.ColorNameHover: //→ ตอนเอาเมาส์ชี้
+			return color.NRGBA{255, 255, 255, 50}
+
+		case theme.ColorNameDisabledButton: //→ ปุ่มที่กดไม่ได้***
+			return color.NRGBA{255, 0, 0, 255}
+
+		// 🧠 สถานะทั่วไป
+		case theme.ColorNameDisabled: // → สีของ element ที่ใช้ไม่ได้***
+			return color.NRGBA64{255, 0, 0, 255}
+
+		case theme.ColorNameFocus: // → ตอนถูกเลือก / โฟกัส***
+			return color.NRGBA{50, 50, 50, 40}
+
+		// 🌈 สีหลักของแอพ
+		case theme.ColorNamePrimary: // → สีเด่น (progress bar / highlight / ปุ่มสำคัญ)
+			return color.NRGBA{109, 191, 57, 200}
+
+			//🧾 Input / UI
+		case theme.ColorNameInputBackground: // → พื้นหลังช่อง input / select
+			return color.NRGBA{50, 50, 50, 50}
+
+		case theme.ColorNamePlaceHolder: // → ตัวอักษร placeholder***
+			return color.NRGBA{255, 0, 0, 255}
+
+		// 🪟 Layer / พื้นหลังพิเศษ
+		case theme.ColorNameMenuBackground: // → เมนู (dropdown / popup)
+			return color.NRGBA{255, 255, 255, 50}
+
+		case theme.ColorNameOverlayBackground: // → dialog / overlay
+			return color.NRGBA{230, 230, 230, 255}
+
+		case theme.ColorNameShadow: // → เงา
+			return color.NRGBA{255, 255, 255, 40}
+
+			//⚠️ สถานะพิเศษ
+		case theme.ColorNameError: // → error (แดง)
+			return color.NRGBA{255, 0, 0, 255}
+
+		case theme.ColorNameSuccess: // → success (เขียว)
+			return color.NRGBA{0, 255, 0, 255}
+
+		case theme.ColorNameWarning: // → warning (เหลือง/ส้ม)
+			return color.NRGBA{255, 165, 255, 255}
+
 		}
 	} else {
 		//theme white
 		switch name {
-		case theme.ColorNameButton: //สีปุ่มปกติ
-			return color.NRGBA{R: 50, G: 50, B: 50, A: 50}
-
-		case theme.ColorNameHover: //ตอนเอาเมาส์ชี้
-			return color.NRGBA{255, 255, 255, 40}
-
-		case theme.ColorNameFocus: //สีเด่น (progress bar / highlight / ปุ่มสำคัญ)
-			return color.NRGBA{50, 50, 50, 40}
-
-		case theme.ColorNameBackground: //สีพื้นหลังสุด *ถ้าไม่มีภาพขั้นกลาง
+		//🎨 สีหลัก
+		case theme.ColorNameBackground: //→ พื้นหลังหลักของแอพ สีพื้นหลังสุด *ถ้าไม่มีภาพขั้นกลาง
 			return color.NRGBA{R: 255, G: 255, B: 255, A: 255}
 
-		case theme.ColorNameShadow: //เงาของทุกสิ่ง
-			return color.NRGBA{255, 255, 255, 40}
-			//select
-		case theme.ColorNameInputBackground: //พื้นหลังช่อง input / select
-			return color.NRGBA{50, 50, 50, 50}
-
-		case theme.ColorNameForeground: // สีตัวอักษร/ไอคอน
+		case theme.ColorNameForeground: //→ สีตัวอักษร/ไอคอน
 			return color.Black
 
-		case theme.ColorNamePrimary: // สีแท่ง progress
-			return color.NRGBA{50, 150, 150, 255}
+			//🔘 ปุ่ม
+		case theme.ColorNameButton: //→ สีปุ่มปกติ
+			return color.NRGBA{R: 50, G: 50, B: 50, A: 50}
+
+		case theme.ColorNamePressed: //→ ตอนกด***
+			return color.NRGBA{191, 218, 255, 255}
+
+		case theme.ColorNameHover: //→ ตอนเอาเมาส์ชี้
+			return color.NRGBA{255, 255, 255, 50}
+
+		case theme.ColorNameDisabledButton: //→ ปุ่มที่กดไม่ได้***
+			return color.NRGBA{255, 0, 0, 255}
+
+		// 🧠 สถานะทั่วไป
+		case theme.ColorNameDisabled: // → สีของ element ที่ใช้ไม่ได้***
+			return color.NRGBA64{255, 0, 0, 255}
+
+		case theme.ColorNameFocus: // → ตอนถูกเลือก / โฟกัส***
+			return color.NRGBA{50, 50, 50, 40}
+
+		// 🌈 สีหลักของแอพ
+		case theme.ColorNamePrimary: // → สีเด่น (progress bar / highlight / ปุ่มสำคัญ)
+			return color.NRGBA{109, 191, 57, 200}
+
+			//🧾 Input / UI
+		case theme.ColorNameInputBackground: // → พื้นหลังช่อง input / select
+			return color.NRGBA{50, 50, 50, 50}
+
+		case theme.ColorNamePlaceHolder: // → ตัวอักษร placeholder***
+			return color.NRGBA{255, 0, 0, 255}
+
+		// 🪟 Layer / พื้นหลังพิเศษ
+		case theme.ColorNameMenuBackground: // → เมนู (dropdown / popup)
+			return color.NRGBA{255, 255, 255, 50}
+
+		case theme.ColorNameOverlayBackground: // → dialog / overlay
+			return color.NRGBA{230, 230, 230, 255}
+
+		case theme.ColorNameShadow: // → เงา
+			return color.NRGBA{255, 255, 255, 40}
+
+			//⚠️ สถานะพิเศษ
+		case theme.ColorNameError: // → error (แดง)
+			return color.NRGBA{255, 0, 0, 255}
+
+		case theme.ColorNameSuccess: // → success (เขียว)
+			return color.NRGBA{0, 255, 0, 255}
+
+		case theme.ColorNameWarning: // → warning (เหลือง/ส้ม)
+			return color.NRGBA{255, 165, 255, 255}
+
 		}
 	}
 	return theme.DefaultTheme().Color(name, v)
